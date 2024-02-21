@@ -9,6 +9,9 @@ void K(T& param);       // param is a reference
 template<typename T>
 void L(T&& param);       // param is now a universal reference
 
+template<typename T>
+void M(T param);         // param is still passed by value
+
 int main()
 {
 
@@ -47,6 +50,12 @@ int main()
 
     L(27);                   // 27 is rvalue, so T is int,
                              // param's type is therefore int&&
+
+    //case pass by value (attributes of declared variable are not deduced, for instance const int is int or volatile is dropped)
+    const char* const ptr =  // ptr is const pointer to const object
+  "Fun with pointers";
+    M(ptr);                  // pass arg of type const char * const
+
     return 0;
 }
 
@@ -67,4 +76,10 @@ template<typename T>
 void L(T&& param)
 {
     std::cout<<"Val_L: "<<param<<std::endl;
+}
+
+template<typename T>
+void M(T param)
+{
+    std::cout<<"Val_M: "<<param<<std::endl;
 }
