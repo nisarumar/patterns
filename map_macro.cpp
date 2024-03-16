@@ -1,5 +1,6 @@
 #include <iostream>
 #include <array>
+#include <stdio.h>
 
 //using namespace std;
 #define MAP_OUT
@@ -16,8 +17,8 @@
 #define B(x) x GET_NEXT(x,B) MAP_OUT(x)
 
 //if peek is () GETEND() is invoked which resolve in GET_NEXT0(0,GETEND2,MACFUNC,0) and next becomes GETEND2
-//however remember in MAPX call it would be "#x GETEND2 ((),)" where peek is () and VA_ARGS are nothing
-//to get red of that, GETEND2(...) resolving to nothing is needed.
+//however remember in MAPX call would be "#x GETEND2 ((),)" where peek is () and VA_ARGS are nothing
+//to get red of that GETEND2(...) to nothing is needed.
 //if peek is not (), then GET_NEXT1 will resolve in GET_NEXT0(GETEND peek , MACFUNC, 0) which will resolve in alternate MACFUNC call
 //MAP_OUT is needed here otherwise the next call won't proceed. gcc -E option lets you see the result.
 #define GETEND2(...)
@@ -34,16 +35,33 @@
 
 #define MK_STRING(...) EVAL(MAP1( __VA_ARGS__,()))
 
-std::array arr {MK_STRING(g,g,k,l,m,n,p,q,sdf,fdgfgdfgdfgdf)};
-
-
-int main()
+void c_call()
 {
+    const char* arr[] = {MK_STRING(g,g,k,l,m,n,p,q,sdf,fdgfgdfgdfgdf)};
+    int arr_size = sizeof(arr)/sizeof(char*);
+    for (int i = 0; i<arr_size; i++)
+    {
+        printf("string_literal: %s\n",arr[i]);
+    }
+    printf("Size: %d\n", arr_size);
+}
+
+void cpp_call()
+{
+
+    std::array arr {MK_STRING(g,g,k,l,m,n,p,q,sdf,fdgfgdfgdfgdf)};
     for (int i = 0; i<arr.size(); i++)
     {
         std::cout<<arr[i]<<std::endl;
     }
     std::cout<<arr.size()<<std::endl;
+
+}
+
+int main()
+{
+    c_call();
+    cpp_call();
 
     return 0;
 }
