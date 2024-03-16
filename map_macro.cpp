@@ -28,7 +28,7 @@
 #define GET_NEXT(peek, MACFUNC) GET_NEXT1(GETEND peek, MACFUNC) //if peek is () then MACRO call to GETEND ();
 
 
-//GET_NEXT has to get based on peek value, either a call to alternate MAP0/1 macro (provided as input to GET_NEXT) or No call
+//GET_NEXT has to get based on peek value: either a call to alternate MAP0/1 macro (provided as input to GET_NEXT) or No call
  
 #define MAP1(x,peek,...) #x, GET_NEXT(peek, MAP0)(peek,__VA_ARGS__)
 #define MAP0(x,peek,...) #x, GET_NEXT(peek, MAP1)(peek,__VA_ARGS__)
