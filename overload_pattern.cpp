@@ -1,9 +1,9 @@
 #include<variant>
 #include<string>
 
-template<typename ... Ls>
+template<typename ... Ls> 
 struct over_load: Ls ... {
-    using Ls::operator()...;
+    using Ls::operator()...; //inherits operator (); in this case which are lambdas; lambdas are classes where capture are private data memebers; below it uses CTAD therefore no need to provide the class (lambda) template type
 };
 
 
